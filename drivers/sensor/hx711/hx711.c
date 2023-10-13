@@ -101,6 +101,10 @@ static int hx711_sample_fetch(const struct device *dev, enum sensor_channel chan
 	struct hx711_data *data = dev->data;
 	const struct hx711_config *cfg = dev->config;
 
+	if (!avia_hx711_is_ready(dev->data)){
+		return 0;
+	}
+
 	if (data->power != HX711_POWER_ON) {
 		return -EACCES;
 	}
@@ -116,10 +120,10 @@ static int hx711_sample_fetch(const struct device *dev, enum sensor_channel chan
 	uint32_t key = irq_lock();
 #endif
 	for (i = 0; i < 24; i++) {
-        gpio_pin_set(data->sck_gpio, hx711_config.sck.pin, true);
+        gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, true);
 		count = count << 1;
-        gpio_pin_set(data->sck_gpio, hx711_config.sck.pin, false);
-		if (gpio_pin_get(data->dout_gpio, hx711_config.dout.pin) {
+        gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, false);
+		if (gpio_pin_get(data->dout_gpio, hx711_config.dout_pin)) {
 			count++;
 		}
 	}
@@ -530,6 +534,14 @@ int avia_hx711_power(const struct device *dev, enum hx711_power pow)
 	default:
 		return -ENOTSUP;
 	}
+}
+
+/**
+ * 
+*/
+// Should return true if pin is low; false if high
+inline int avia_hx711_is_ready(struct hx711_data *data){
+	return gpio_pin_get(data->dout_gpio, hx711_config.dout_pin);
 }
 
 #ifdef CONFIG_PM_DEVICE
