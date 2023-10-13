@@ -136,3 +136,13 @@ CONFIG_SENSOR=y
 CONFIG_HX711=y
 CONFIG_LOG=y
 ```
+### Project include
+Create directory "modules" inside project root directory
+Clone repository into modules as directory "hx711"
+Edit "CMakeLists.txt" in project root directory. (The + means add to file)
+```ini
++set(ZEPHYR_EXTRA_MODULES "${CMAKE_SOURCE_DIR}/modules/hx711")
+find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+```
+Edit prj.conf to include sensor and hx711
+
