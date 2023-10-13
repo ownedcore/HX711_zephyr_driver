@@ -101,8 +101,15 @@ static int hx711_sample_fetch(const struct device *dev, enum sensor_channel chan
 	struct hx711_data *data = dev->data;
 	const struct hx711_config *cfg = dev->config;
 
-	if (!avia_hx711_is_ready(dev->data)){
-		return 0;
+	if (!avia_hx711_is_ready(data)){
+		ret = -EIO;
+        goto exit;
+        /* !!! Decide on return value !!!
+         * EACCES - Permission denied
+         * EADDRINUSE - Address allready in use
+         * ECONNREFUSED - Connection refused
+         * EIO - I/O error 
+        */
 	}
 
 	if (data->power != HX711_POWER_ON) {
