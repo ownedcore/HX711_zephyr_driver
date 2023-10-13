@@ -116,10 +116,10 @@ static int hx711_sample_fetch(const struct device *dev, enum sensor_channel chan
 	uint32_t key = irq_lock();
 #endif
 	for (i = 0; i < 24; i++) {
-        gpio_pin_set(data->sck_gpio, hx711_config.sck.pin, true);
+        gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, true);
 		count = count << 1;
-        gpio_pin_set(data->sck_gpio, hx711_config.sck.pin, false);
-		if (gpio_pin_get(data->dout_gpio, hx711_config.dout.pin) {
+        gpio_pin_set(data->sck_gpio, hx711_config.sck_pin, false);
+		if (gpio_pin_get(data->dout_gpio, hx711_config.dout_pin)) {
 			count++;
 		}
 	}
