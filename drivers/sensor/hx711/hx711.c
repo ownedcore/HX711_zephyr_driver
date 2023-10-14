@@ -548,7 +548,7 @@ int avia_hx711_power(const struct device *dev, enum hx711_power pow)
 */
 // Should return true if pin is low; false if high
 inline int avia_hx711_is_ready(struct hx711_data *data){
-	return gpio_pin_get(data->dout_gpio, hx711_config.dout_pin);
+	return !gpio_pin_get(data->dout_gpio, hx711_config.dout_pin);
 }
 
 #ifdef CONFIG_PM_DEVICE
