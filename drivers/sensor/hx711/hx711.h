@@ -106,15 +106,11 @@ struct sensor_value avia_hx711_calibrate(const struct device *dev,
 					 uint8_t readings);
 
 /**
- * @brief Is hx711 ready?
+ * @brief Check if hx711 is ready for data retrival 
  *
- * If ready pin associated with DOUT should be low
+ * @param data Pointer to the hx711 driver data structure
+ * @retval 1 if ready, 0 if not
  *
- * @param dev Pointer to the hx711 device structure
- *
- * @retval True | False
- *
- * @remarks ??? should return a boolean value ???
 */
 int avia_hx711_is_ready(struct hx711_data *data);
 
